@@ -183,6 +183,18 @@ export const Card = styled.div`
         margin-bottom: 15px;
         display: flex;
         align-items: center;
+
+        &:hover {
+          .deleteBtn {
+            opacity: 1;
+          }
+        }
+        
+        .deleteBtn {
+          transition: all 300ms ease;
+          display: flex;
+          opacity: 0;
+        }
         
         .inputQuestion {
           margin-right: 50px;

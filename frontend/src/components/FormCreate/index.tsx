@@ -11,12 +11,7 @@ import DeleteOutlineOutlinedIcon from '@material-ui/icons/DeleteOutlineOutlined'
 import IconButton from '@material-ui/core/IconButton';
 import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOutlined';
 
-interface Props {
-  titleForm: any,
-  setTitleForm: any,
-}
-
-const TitleForm: React.FC<any> = ({ titleForm, setTitleForm }: Props) => {
+const TitleForm: React.FC<any> = ({ titleForm, setTitleForm }: any) => {
   return (
     <Title>
       <div className="cardContainer">
@@ -50,62 +45,74 @@ interface StateProps {
   value: string
 } 
 
-const CardForm: React.FC = () => {
+const CardForm: React.FC<any> = ({ options, setOptions, question, type, questions, index }: any) => {
   const [mode, setMode] = useState("choice")
-  const [options, setOptions] = useState([
-    {
-      index: 1,
-      content: ""
-    }
-  ])
+  var optionsEdit = [...options]
 
   const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-    setMode(event.target.value as string);
+    setMode(event.target.value as string)
+
+    optionsEdit[index].type = event.target.value as string
+    setOptions(optionsEdit)
   };
 
   const handleNewOption = () => {
-    if (options.length < 5) {
-      setOptions([...options, {index: options.length + 1, content: ""}])
+    if (options[index].questions.length < 5) {
+      optionsEdit[index].questions.push({ option: "" })
+      setOptions(optionsEdit)
     } else {
       console.log("max options")
     }
   }
 
- 
+  const updateQuestions = (i: number, val: string) => {
+    optionsEdit[index].questions[i].option = val
+    setOptions(optionsEdit)
+  }
 
-  const newState = (id, value): StateProps  => {
-    options.map((obj: any) => {
-      obj.id === id ? { ...obj, content: value } : obj
-    })
-  };
+  const updateTitleQuestion = ( val: string ) => {
+    optionsEdit[index].question = val
+    setOptions(optionsEdit)
+  }
+
+  const deleteQuestion = ( j: number ) => {
+    optionsEdit[index].questions.splice(j, 1)
+    setOptions(optionsEdit)
+  }
 
   let method
   if (mode === "choice") {
     method = (
       <div className="questions">
         {
-          options.map((option) => {
+          questions.map((option: any, index: number) => {
             return (
-              <div key={option.index} id={`${option.index}`} className="question">
+              <div key={index} id={`${index}`} className="question">
                 <div className="circle"/>
                 <div className="inputQuestion">
-                  <input type="text" onChange={handleChange} spellCheck="false" placeholder="Option"/>
+                  <input type="text" value={option.option} onChange={e => updateQuestions(index, e.target.value)} spellCheck="false" placeholder="Option"/>
                   <div className="linesQuestion">
                     <div className="lineQuestion2"/>
                     <div className="lineQuestion"/>
                   </div>
                 </div>
+                <IconButton className="deleteBtn" onClick={() => deleteQuestion(index)} size="small">
+                  <DeleteOutlineOutlinedIcon style={{ fontSize: 20 }}/>
+                </IconButton>
               </div>
             )
           })
         }
-        <div className="buttonAddNew">
-          <div className="circle"/>
-          <button onClick={handleNewOption}>
-            Add option
-            <div className="line"/>
-          </button>
-        </div>
+        {options[index].questions.length < 5 ? (
+          <div className="buttonAddNew">
+            <div className="circle"/>
+            <button onClick={handleNewOption}>
+              Add option
+              <div className="line"/>
+            </button>
+          </div>
+        ) : ""
+        }
       </div>
     )
   } else if (mode === "paragraph") {
@@ -127,7 +134,7 @@ const CardForm: React.FC = () => {
       <div className="card">
         <div className="titleQuestion">
           <div className="textareaQuestion">
-            <textarea spellCheck="false" placeholder="Question" />
+            <textarea spellCheck="false" value={question} onChange={e => updateTitleQuestion(e.target.value)} placeholder="Question" />
             <div className="lines">
               <div className="line2"/>
               <div className="line"/>
@@ -167,13 +174,36 @@ const CardForm: React.FC = () => {
   )
 }
 
-const FormCreate: React.FC<any> = ({ titleForm, setTitleForm }: Props) => {
+const FormCreate: React.FC<any> = ({ titleForm, setTitleForm }: any) => {
+  const [options, setOptions] = useState([
+    {
+      question: "",
+      type: "",
+      questions: [
+        {
+          option: ""
+        }
+      ]
+    }
+  ])
+
   return (
     <Container>
-      <TitleForm titleForm={titleForm} setTitleForm={setTitleForm}/>
-      <CardForm/>
-      <CardForm/>
-      <CardForm/>
+      <TitleForm options={options} setOptions={setOptions} titleForm={titleForm} setTitleForm={setTitleForm}/>
+      {
+        options.map((option: any, index: number) => {
+          return (
+            <CardForm 
+              question={option.question} 
+              type={option.type} 
+              questions={option.questions} 
+              options={options} 
+              setOptions={setOptions}
+              index={index}
+            />
+          )
+        })
+      }
     </Container>
   );
 }
