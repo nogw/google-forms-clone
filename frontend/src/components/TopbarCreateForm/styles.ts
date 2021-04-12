@@ -9,8 +9,47 @@ export const Container = styled.div`
   justify-content: space-between;
   padding: 8px;
   padding-bottom: 8px;
-
   box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.1);
+  
+  .error {
+    position: relative;
+    z-index: 999;
+
+    &:hover {
+      .errorMessage {
+        opacity: 1;
+        display: flex;
+      }
+    }
+
+    /* .MuiButtonBase-root {
+      &:focus {
+        .errorMessage {
+          opacity: 1;
+          display: flex;
+        }
+      }
+    } */
+
+    .MuiSvgIcon-root {
+      color: #e63946;
+    }
+
+    .errorMessage {
+      display: none;
+      opacity: 0;
+      background-color: #212121;
+      min-width: 200px;
+      position: absolute;
+      top: 46px;
+
+      p {
+        color: #f1f1f1;
+        font-size: 1rem;
+        padding: 12px;
+      }
+    }
+  }
 
   .left {
     display: flex;

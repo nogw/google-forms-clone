@@ -7,17 +7,13 @@ import ColorLensOutlinedIcon from '@material-ui/icons/ColorLensOutlined';
 import VisibilityOutlinedIcon from '@material-ui/icons/VisibilityOutlined';
 import SettingsOutlinedIcon from '@material-ui/icons/SettingsOutlined';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
+import ErrorIcon from '@material-ui/icons/Error';
 import IconButton from '@material-ui/core/IconButton'
 import Avatar from '@material-ui/core/Avatar'
 
 import { Container, ButtonSubmit } from './styles';
 
-interface Props {
-  titleForm: any,
-  setTitleForm: any,
-}
-
-const TopbarCreateForm: React.FC<any> = ({ titleForm, setTitleForm }: Props) => {
+const TopbarCreateForm: React.FC<any> = ({ titleForm, setTitleForm, verifyErrors, errors }: any) => {
   return (
     <Container>
       <div className="left">
@@ -39,9 +35,21 @@ const TopbarCreateForm: React.FC<any> = ({ titleForm, setTitleForm }: Props) => 
       <IconButton>
         <SettingsOutlinedIcon style={{ color: "#5f6368" }}/>
       </IconButton>
-      <ButtonSubmit>
+      <ButtonSubmit onClick={() => verifyErrors()}>
         Submit
       </ButtonSubmit>
+      {
+        errors && (
+          <div className="error">
+            <IconButton>
+              <ErrorIcon/>
+              <div className="errorMessage">
+                <p>{errors}</p>
+              </div>
+            </IconButton>
+          </div>
+        )
+      }
       <IconButton>
         <MoreVertIcon style={{ color: "#5f6368" }}/>
       </IconButton>
