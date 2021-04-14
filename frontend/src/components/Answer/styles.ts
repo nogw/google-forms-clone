@@ -1,14 +1,5 @@
 import styled from 'styled-components';
 
-export const Container = styled.div`
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  overflow: auto;
-  font-family: "Roboto";
-  height: 100vh;
-`;
-
 export const Card = styled.div`
   margin-top: 20px;
   width: 60%;
@@ -20,10 +11,62 @@ export const Card = styled.div`
     background-color: #fff;
     padding: 22px 24px 24px 24px;
     border-radius: 10px;
+
+    .MuiRadio-root {
+      height: 35px;
+    }
+
+    .Mui-checked {
+      color: #673ab7;
+    } 
     
     .short {
       margin-top: 20px;
-      margin-bottom: 50px;
+
+      input {
+        color: #202124;
+        font-size: 14px;
+        height: 28px;
+        font-weight: 400;
+        font-family: "Roboto";
+        width: 50%;
+
+        outline: none;
+        white-space: pre-wrap;
+        word-wrap: break-word;
+        overflow-y: visible;
+        overflow-x: hidden;
+
+        background-color: transparent;
+        border: none;
+        display: block;
+                  
+        &:focus + .lines .line2 {
+          width: 100%;
+        }
+      }
+
+      .lines {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 50%;
+        
+        .line {
+          width: 100%;
+          background-color: #e0e0e0;
+          height: 1px;
+        }
+
+        .line2 {
+          transition: all 300ms cubic-bezier(0.9, 0, 0.4, 1);
+          position: absolute;
+          background-color: #673ab7;
+          height: 2px;
+          width: 0px;
+        }
+      }
     }
 
     .paragraph {
@@ -32,7 +75,6 @@ export const Card = styled.div`
       textarea {
         color: #202124;
         font-size: 14px;
-        height: 42px;
         font-weight: 400;
         font-family: "Roboto";
         flex: 1;
@@ -49,18 +91,22 @@ export const Card = styled.div`
         border: none;
         display: block;
                   
+        margin-bottom: 6px;
         height: 24px;
 
-        &:focus + .lines .line2 {
+        &:focus ~ .lines .line2 {
           width: 100%;
         }
       }
+
+      
 
       .lines {
         position: relative;
         display: flex;
         align-items: center;
         justify-content: center;
+        width: 100%;
         
         .line {
           width: 100%;
@@ -69,7 +115,7 @@ export const Card = styled.div`
         }
 
         .line2 {
-          transition: all 300ms cubic-bezier(0.4, 0, 0.4, 1);
+          transition: all 300ms cubic-bezier(0.9, 0, 0.4, 1);
           position: absolute;
           background-color: #673ab7;
           height: 2px;
@@ -97,6 +143,43 @@ export const Card = styled.div`
       line-height: 20px;
       color: #202124;
       min-width: 1px;
+    }
+
+  }
+`;
+
+export const Container = styled.div`
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  overflow: auto;
+  font-family: "Roboto";
+  height: 100vh;
+
+  ${Card}:last-child {
+  }
+
+  .confirm {
+    margin-bottom: 20px;
+    margin-top: 20px;
+    width: 60%;
+    
+    button {
+      background-color: #673ab7;
+      border-radius: 5px;
+      border: none;
+      outline: none;
+      color: #fff;
+      font-family: "Roboto";
+      font-weight: 700;
+      font-size: 0.85rem;
+      padding: 10px 20px;
+      transition: all 200ms ease;
+      cursor: pointer;
+
+      &:hover {
+        filter: brightness(1.1);
+      }
     }
   }
 `;

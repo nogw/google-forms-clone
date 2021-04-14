@@ -7,6 +7,7 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
+import TextareaAutosize from '@material-ui/core/TextareaAutosize';
 
 const TitleCard: React.FC<any> = ({ title, description }) => {
   return (
@@ -44,7 +45,7 @@ const CardItem: React.FC<any> = ({ question, questions, type }) => {
   } else if (type == "paragraph") {
     method = (
       <div className="paragraph">
-          <textarea spellCheck="false" placeholder="Form description" />
+          <TextareaAutosize spellCheck="false" placeholder="Your answer" />
           <div className="lines">
             <div className="line2"/>
             <div className="line"/>
@@ -52,9 +53,15 @@ const CardItem: React.FC<any> = ({ question, questions, type }) => {
       </div>
     )
   } else if (type == "short") {
-    <div className="short">
-      <input type="text" placeholder="Short response text"/>
-    </div>
+    method = (
+      <div className="short">
+        <input spellCheck="false" placeholder="Your answer" />
+        <div className="lines">
+          <div className="line2"/>
+          <div className="line"/>
+        </div>
+      </div>
+    )
   }
   
   return (
@@ -79,6 +86,11 @@ const Answer: React.FC<any> = ({ options, setOptions }) => {
           )
         })
       }
+      <div className="confirm">
+        <button>
+          Submit
+        </button>
+      </div>
     </Container>
   );
 }
