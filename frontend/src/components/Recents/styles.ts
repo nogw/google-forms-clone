@@ -28,11 +28,76 @@ export const Container = styled.div`
       font-size: 1rem;
     }
   }
+
+  .recentForms {
+    width: 68%;
+    display: flex;
+    overflow-x: auto;
+
+    a {
+      text-decoration: none;
+      margin: 3px;
+    }
+  }
+`;
+
+export const FormContainer = styled.div`
+  width: 200px;
+  border: 1px solid #e2e2e2;
+  cursor: pointer;
+  transition: 300ms ease all;
+
+  &:hover {
+    border: 1px solid #8430ce;
+  }
+
+  .gray {
+    width: 198px;
+    background-color: #e2e2e2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 14px;
+
+    img {
+      height: 100px;
+    }
+  }
+
+  .content {
+    padding: 10px 14px;
+
+    .title {
+      color: #464a4e;
+      font-size: 14px;
+      margin-left: 4px;
+      margin-bottom: 2px;
+    }
+
+    .infos {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      p {
+        font-size: 12px;
+        color: #80868b;
+      }
+
+      .list {
+        color: #8430ce;
+      }
+
+      .dots {
+        color: #5f6368;
+      }
+    }
+  }
 `;
 
 export const Header = styled.div`
   width: 68%;
-  padding: 6px 8px;
+  padding: 6px 8px 6px 2px;
   display: flex;
   align-items: center;
   

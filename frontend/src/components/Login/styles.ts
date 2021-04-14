@@ -14,6 +14,11 @@ export const Container = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+
+  .MuiCircularProgress-circle {
+    color: #fff;
+  }
+
   .menu {
     width: 100%;
   }
@@ -51,9 +56,11 @@ export const Container = styled.div`
     transition: all 450ms ease;
     opacity: 0;
   }
+
   @media screen and (max-width: 450px) {
     background-color: #fff;
   }
+  
   main {
     z-index: 1;
     background-color: #fff;
@@ -145,17 +152,22 @@ export const Container = styled.div`
         }
       }
     }
+  }
 
-    @media screen and (max-width: 450px) {
+  @media screen and (max-width: 450px) {
+    main {
       z-index: 1;
-      background-color: transparent;
-      width: auto;
-      min-width: 0;
+      min-width: unset;
+      width: 100%;
       box-shadow: none;
-      padding: 12px;
+      padding: 48px;
       display: flex;
       align-items: center;
       flex-direction: column;
+    }
+
+    .MuiCircularProgress-circle {
+      color: #4285f4;
     }
   }
 `;

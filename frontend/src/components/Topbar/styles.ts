@@ -5,6 +5,28 @@ export const IconApps = styled(IoApps)`
   height: 20px;
 `;
 
+interface Props {
+  bgcColor: string;
+}
+
+export const Avatar = styled.div<Props>`
+  margin: 8px;
+  height: 32px;
+  width: 32px;
+  border-radius: 50%;
+  background-color: ${props => props.bgcColor || '#767F8C'};
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  h1 {
+    color: #fff;
+    font-size: 1rem;
+    position: relative;
+    bottom: 1.51px;
+  }
+`;
+
 export const Container = styled.div`
   height: 64px;
   background-color: #fff;
@@ -86,10 +108,5 @@ export const Container = styled.div`
 
   .right {
     display: flex;
-    .MuiAvatar-root {
-      margin: 8px;
-      height: 32px;
-      width: 32px;
-    }
   }
 `;

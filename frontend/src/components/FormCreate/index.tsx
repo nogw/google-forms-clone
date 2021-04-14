@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState } from 'react';
 
 import { Container, Title, Card } from './styles';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -12,10 +12,14 @@ import IconButton from '@material-ui/core/IconButton';
 import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOutlined';
 
 const TitleForm: React.FC<any> = ({ options, setOptions }) => {
-  var optionsEdit = [...options]
+  var optionsEdit = options
+
+  const handleChange = (name: any, value: any) => {
+    setOptions((prev: any) => ({...prev, [name]: value}))
+  }
 
   const handleUpdateTitle = ( val: string ) => {
-    optionsEdit[0].title = val
+    handleChange("title", val)
     setOptions(optionsEdit)
   };
 
@@ -52,11 +56,6 @@ const TitleForm: React.FC<any> = ({ options, setOptions }) => {
   )
 }
 
-interface StateProps {
-  id: string,
-  value: string
-} 
-
 const CardForm: React.FC<any> = ({ 
     options, 
     setOptions, 
@@ -66,7 +65,6 @@ const CardForm: React.FC<any> = ({
     index 
   }: any) => {
 
-  const [mode, setMode] = useState(type)
   var optionsEdit = [...options]
 
   const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
@@ -216,7 +214,7 @@ const FormCreate: React.FC<any> = ({ titleForm, setTitleForm, options, setOption
     <Container>
       <TitleForm options={options} setOptions={setOptions}/>
       {
-        options[0].cards.map((option: any, index: number) => {
+        options.cards.map((option: any, index: number) => {
           return (
             <CardForm
               key={index} 

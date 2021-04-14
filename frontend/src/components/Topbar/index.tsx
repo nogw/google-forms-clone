@@ -1,12 +1,36 @@
-import React from 'react';
-import { Container, IconApps } from './styles';
+import React, { useContext } from 'react';
+import { Container, IconApps, Avatar } from './styles';
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
-import Avatar from '@material-ui/core/Avatar'
 import IconButton from '@material-ui/core/IconButton'
 import Logo from '../logo.svg'
+import { Context } from '../../UserProvider';
+
+const colors = [
+  "#FF7262",
+  "#0ACF83",
+  "#A259FF",
+  "#ED5B61",
+  "#4EA9F6",
+  "#767F8C",
+  "#ebc83d",
+  "#badf55",
+  "#badf55",
+  "#2082AA",
+  "#A259FF",
+  "#FF8C00",
+  "#ED5B61",
+  "#4EA9F6",
+  "#767F8C",
+  "#ebc83d",
+  "#badf55",
+  "#2082AA",
+  "#FF8C00"
+]
 
 const Topbar: React.FC = () => {
+  const [user, setUser] = useContext(Context)
+
   return (
     <Container>
       <div className="left">
@@ -26,7 +50,9 @@ const Topbar: React.FC = () => {
         <IconButton>
           <IconApps/>
         </IconButton>
-        <Avatar/>
+        <Avatar bgcColor={colors[user.avatarColor]}>
+          <h1>{user ? user.name.substring(0, 2) : ""}</h1>
+        </Avatar>
       </div>
     </Container>
   );
