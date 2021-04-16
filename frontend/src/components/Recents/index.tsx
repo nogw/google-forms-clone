@@ -14,7 +14,7 @@ import dayjs from 'dayjs'
 
 const Form: React.FC<any> = ({ title, id }) => {
   return (
-    <Link to={id}>
+    <Link to={`/f/${id}`}>
       <FormContainer>
         <div className="gray">
           <img src="https://riu.cead.unb.br/images/google_forms.png?1591378945" alt="forms"/>

@@ -163,8 +163,10 @@ export const Container = styled.div`
     margin-bottom: 20px;
     margin-top: 20px;
     width: 60%;
-    
-    button {
+    display: flex;
+    align-items: center;
+
+    .submitBtn {
       background-color: #673ab7;
       border-radius: 5px;
       border: none;
@@ -181,7 +183,76 @@ export const Container = styled.div`
         filter: brightness(1.1);
       }
     }
+  
+    .error {
+      position: relative;
+      z-index: 999;
+      margin-left: 8px;
+
+      &:hover {
+        .errorMessage {
+          opacity: 1;
+          display: flex;
+        }
+      }
+
+      .MuiSvgIcon-root {
+        color: #e63946;
+      }
+
+      .errorMessage {
+        display: none;
+        opacity: 0;
+        background-color: #212121;
+        min-width: 170px;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        left: 40px;
+
+        p {
+          color: #f1f1f1;
+          font-size: 0.9rem;
+          padding: 10px;
+        }
+      }
+    }  
+
+    .success {
+      position: relative;
+      z-index: 999;
+      margin-left: 8px;
+
+      &:hover {
+        .successMessage {
+          opacity: 1;
+          display: flex;
+        }
+      }
+
+      .MuiSvgIcon-root {
+        color: #64f683;
+      }
+
+      .successMessage {
+        display: none;
+        opacity: 0;
+        background-color: #212121;
+        min-width: 170px;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        left: 40px;
+
+        p {
+          color: #f1f1f1;
+          font-size: 0.9rem;
+          padding: 10px;
+        }
+      }
+    }
   }
+
 `;
 
 export const Title = styled.div`
