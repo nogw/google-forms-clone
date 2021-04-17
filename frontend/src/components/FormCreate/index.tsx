@@ -14,18 +14,9 @@ import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOut
 const TitleForm: React.FC<any> = ({ options, setOptions }) => {
   var optionsEdit = options
 
-  const handleChange = (name: any, value: any) => {
+  const handleUpdateTitle = ( e: any ) => {
+    const {name, value} = e.target
     setOptions((prev: any) => ({...prev, [name]: value}))
-  }
-
-  const handleUpdateTitle = ( val: string ) => {
-    handleChange("title", val)
-    setOptions(optionsEdit)
-  };
-
-  const handleUpdateDescription = ( val: string ) => {
-    optionsEdit[0].description = val
-    setOptions(optionsEdit)
   };
 
   return (
@@ -36,14 +27,14 @@ const TitleForm: React.FC<any> = ({ options, setOptions }) => {
             <div className="topBar"/>
             <div className="leftBar"/>
             <div className="textareaTitle">
-              <textarea spellCheck="false" value={options.title} onChange={e => handleUpdateTitle(e.target.value)} placeholder="Form title" />
+              <textarea spellCheck="false" onChange={e => handleUpdateTitle(e)} name="title" value={options.title} placeholder="Form title" />
               <div className="lines">
                 <div className="line2"/>
                 <div className="line"/>
               </div>
             </div>
             <div className="textareaDescription">
-              <textarea spellCheck="false" value={options.description} onChange={e => handleUpdateDescription(e.target.value)} placeholder="Form description" />
+              <textarea spellCheck="false" onChange={e => handleUpdateTitle(e)} name="description" value={options.description} placeholder="Form description" />
               <div className="lines">
                 <div className="line2"/>
                 <div className="line"/>
@@ -62,42 +53,44 @@ const CardForm: React.FC<any> = ({
     question, 
     type, 
     questions, 
-    index 
+    index,
+    _id
   }: any) => {
 
-  var optionsEdit = [...options]
+  var optionsEdit = options
+  var card = [...options.cards]
 
   const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-    optionsEdit[0].cards[index].type = event.target.value as string
-    setOptions(optionsEdit)
+    card[index].type = event.target.value as string
+    setOptions((prev: any) => ({...prev, cards: card}))
   };
 
   const handleNewOption = () => {
-    if (optionsEdit[0].cards[index].questions.length < 5) {
-      optionsEdit[0].cards[index].questions.push({ option: "" })
-      setOptions(optionsEdit)
+    if (card[index].questions.length < 5) {
+      card[index].questions.push({ option: "" })
+      setOptions((prev: any) => ({...prev, cards: card}))
     } else {
       console.log("max options")
     }
   }
 
   const updateQuestions = (i: number, val: string) => {
-    optionsEdit[0].cards[index].questions[i].option = val
-    setOptions(optionsEdit)
+    card[index].questions[i].option = val
+    setOptions((prev: any) => ({...prev, cards: card}))
   }
 
-  const updateTitleQuestion = ( val: string ) => {
-    optionsEdit[0].cards[index].question = val
-    setOptions(optionsEdit)
+  const updateTitleQuestion = async ( val: string ) => {    
+    card[index].question = val
+    setOptions((prev: any) => ({...prev, cards: card}))
   }
 
   const deleteQuestion = ( j: number ) => {
-    optionsEdit[0].cards[index].questions.splice(j, 1)
-    setOptions(optionsEdit)
+    card[index].questions.splice(j, 1)
+    setOptions((prev: any) => ({...prev, cards: card}))
   }
 
   const addNewCard = () => {
-    optionsEdit[0].cards.push({
+    card.push({
       question: "",
       type: "choice",
       questions: [
@@ -106,21 +99,22 @@ const CardForm: React.FC<any> = ({
         }
       ]
     })
-    setOptions(optionsEdit)
+
+    setOptions((prev: any) => ({...prev, cards: card}))
   }
 
   const deleteCard = () => {
-    optionsEdit[0].cards.splice(index, 1)
-    setOptions(optionsEdit)
-    console.log(optionsEdit[0].cards)
+    card.splice(index, 1)
+    setOptions((prev: any) => ({...prev, cards: card}))
   }
 
   let method
-  if (optionsEdit[0].cards[index].type === "choice") {
+
+  if (options.cards[index].type === "choice") {
     method = (
       <div className="questions">
         {
-          questions.map((option: any, index: number) => {
+          options.cards[index].questions.map((option: any, index: number) => {
             return (
               <div key={index} id={`${index}`} className="question">
                 <div className="circle"/>
@@ -138,7 +132,8 @@ const CardForm: React.FC<any> = ({
             )
           })
         }
-        {optionsEdit[0].cards[index].questions.length < 5 ? (
+        {
+        optionsEdit.cards[index].questions.length < 5 ? (
           <div className="buttonAddNew">
             <div className="circle"/>
             <button onClick={handleNewOption}>
@@ -150,13 +145,13 @@ const CardForm: React.FC<any> = ({
         }
       </div>
     )
-  } else if (optionsEdit[0].cards[index].type === "paragraph") {
+  } else if (optionsEdit.cards[index].type === "paragraph") {
     method = (
       <div className="paragraph">
         <textarea disabled placeholder="Long response text"/>
       </div>
     )
-  } else if (optionsEdit[0].cards[index].type === "short") {
+  } else if (optionsEdit.cards[index].type === "short") {
     method = (
       <div className="short">
         <input disabled type="text" placeholder="Short response text"/>
@@ -177,7 +172,7 @@ const CardForm: React.FC<any> = ({
           </div>
           <FormControl variant="outlined" className="input">
             <Select 
-              value={optionsEdit[0].cards[index].type}
+              value={optionsEdit.cards[index].type}
               onChange={handleChange}
               >
               <MenuItem value="choice">
@@ -224,6 +219,7 @@ const FormCreate: React.FC<any> = ({ titleForm, setTitleForm, options, setOption
               options={options} 
               setOptions={setOptions}
               index={index}
+              _id={option._id}
             />
           )
         })

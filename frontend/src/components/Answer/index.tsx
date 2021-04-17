@@ -89,12 +89,14 @@ const CardItem: React.FC<any> = ({ setAnswerObj, question, questions, type, inde
 
 const Answer: React.FC<any> = ({ options, setOptions }) => {
   const [answerObj, setAnswerObj] = useState<any>([])
+  
   const [errors, setErrors] = useState("")
   const [confirm, setConfirm] = useState("")
   const [IsAnswer, setIsAnswer] = useState(false)
-  const [user, setUser] = useContext(Context)
-  var result = Object.keys(answerObj).map((key) => answerObj[key])
   
+  const [user, setUser] = useContext(Context)
+
+  var result = Object.keys(answerObj).map((key) => answerObj[key])
 
   const verifyAnswer = () => {
     var keyCount = Object.keys(answerObj).length

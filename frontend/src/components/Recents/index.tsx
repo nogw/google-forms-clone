@@ -20,7 +20,7 @@ const Form: React.FC<any> = ({ title, id }) => {
           <img src="https://riu.cead.unb.br/images/google_forms.png?1591378945" alt="forms"/>
         </div>
         <div className="content">
-          <h1 className="title">titulo titulo</h1>
+          <h1 className="title">{title}</h1>
           <div className="infos">
             <ListAltRoundedIcon className="list"/>
             <p>Open {dayjs().format(`MMMM D, YYYY`)}</p>
@@ -78,7 +78,7 @@ const Recents: React.FC = () => {
             {
               recents.map((recent: any) => {
                 return (
-                  <Form key={recent._id} id={recent._id} title={recent.title}/>
+                  <Form key={recent._id} id={recent._id} title={recent.title} />
                 )
               })
             }

@@ -13,7 +13,17 @@ import Avatar from '@material-ui/core/Avatar'
 
 import { Container, ButtonSubmit } from './styles';
 
-const TopbarCreateForm: React.FC<any> = ({ titleForm, setTitleForm, verifyErrors, errors }: any) => {
+const TopbarCreateForm: React.FC<any> = ({ titleForm, setTitleForm, setErrors, verifyErrors, errors, updateForm }: any) => {
+  const handleUpdateForm = () => {    
+    var getErrors: any = verifyErrors()
+
+    if (getErrors < 1) {
+      updateForm()
+    } else {
+      setErrors(getErrors)
+    }
+  }
+
   return (
     <Container>
       <div className="left">
@@ -35,7 +45,7 @@ const TopbarCreateForm: React.FC<any> = ({ titleForm, setTitleForm, verifyErrors
       <IconButton>
         <SettingsOutlinedIcon style={{ color: "#5f6368" }}/>
       </IconButton>
-      <ButtonSubmit onClick={() => verifyErrors()}>
+      <ButtonSubmit onClick={() => handleUpdateForm()}>
         Submit
       </ButtonSubmit>
       {

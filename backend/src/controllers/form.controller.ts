@@ -1,7 +1,7 @@
 import { Request, Response } from 'express'
 import Form from '../models/form.model'
 
-const create = ( req: Request, res: Response ) => {
+const create = async ( req: Request, res: Response ) => { 
   try {
     let form = new Form({
       user_id: req.body.user_id,
@@ -15,7 +15,7 @@ const create = ( req: Request, res: Response ) => {
     .then((form: any) => {
       return res.status(200).json({
         message: "created form",
-        link: `http://localhost:3000/${form._id}`
+        link: `http://localhost:3000/f/${form._id}`
       })
     })
     .catch((error: any) => {
@@ -28,6 +28,27 @@ const create = ( req: Request, res: Response ) => {
       messageError: error
     })
   }
+}
+
+const updateForm = async (req: Request, res: Response) => {
+  const formUpd = {
+    user_id: req.body.user_id,
+    title: req.body.title,
+    description: req.body.description,
+    cards: req.body.cards
+  }
+
+  Form.findOneAndUpdate(
+    { _id: req.body._id },
+    formUpd,
+    { upsert: true, new: true },
+    function(err, doc) {
+      if (err) {
+        console.log("Something wrong when updating data!");
+      }
+      console.log(doc);
+    }
+  );
 }
 
 const getMyForms = async ( req: Request, res: Response ) => {
@@ -46,10 +67,11 @@ const getMyForms = async ( req: Request, res: Response ) => {
 
 const getForm = async ( req: Request, res: Response ) => {
   try {
-    const form: any = await Form.findById(req.query.idForm).exec()
+    const form: any = await Form.findById(req.query.idForm).populate("answers").exec()
     
     if (form != null) {
       return res.status(200).json({
+        message: "achei",
         result: form
       })
     } else {
@@ -67,5 +89,6 @@ const getForm = async ( req: Request, res: Response ) => {
 export default {
   create, 
   getMyForms,
-  getForm
+  getForm,
+  updateForm
 }

@@ -38,6 +38,23 @@ export const Container = styled.div`
       text-decoration: none;
       margin: 3px;
     }
+
+    ::-webkit-scrollbar {
+    width: 10px;
+    height: 8px;
+    }
+    ::-webkit-scrollbar-thumb {
+    background: #e2e2e2;
+    border-radius: 7px;
+    }
+    ::-webkit-scrollbar-thumb:hover{
+    background: #D6D6D6;
+    cursor: all-scroll;
+    }
+    ::-webkit-scrollbar-track{
+    border-radius: 9px;
+    box-shadow: inset -30px -30px 0px #f1f1f1;
+    }
   }
 `;
 
@@ -72,6 +89,11 @@ export const FormContainer = styled.div`
       font-size: 14px;
       margin-left: 4px;
       margin-bottom: 2px;
+
+      width: 160px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     .infos {

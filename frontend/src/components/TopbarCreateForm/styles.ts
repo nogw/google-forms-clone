@@ -9,7 +9,8 @@ export const Container = styled.div`
   justify-content: space-between;
   padding: 8px;
   padding-bottom: 8px;
-  box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.1);
+  position: relative;
+  z-index: 999;
   
   .error {
     position: relative;
@@ -99,7 +100,7 @@ export const ButtonSubmit = styled.button`
   border: none;
   color: #fff;
   cursor: pointer;
-  transition: 300ms ease all;
+  transition: 100ms ease all;
   margin: 0px 6px 0px 6px;
 
   &:hover {
@@ -107,7 +108,7 @@ export const ButtonSubmit = styled.button`
   }
 
   &:active {
-    transform: scale(0.9);
+    transform: scale(0.98);
     filter: brightness(0.9)
   }
 `  
