@@ -12,6 +12,7 @@ import { Context } from '../../UserProvider';
 
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const Container = styled.div`
   height: 100vh;
@@ -25,6 +26,8 @@ const Container = styled.div`
       background-color: #fff;
       height: 40px;
       box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.1);
+      position: relative;
+      z-index: 996;
 
       .MuiTab-root {
         font-size: 14px;
@@ -49,6 +52,14 @@ const Container = styled.div`
   }
 `;
 
+const LoadContainer = styled.div`
+  background-color: #f1f1f1;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
 interface ParamTypes {
   id: string
 }
@@ -57,6 +68,9 @@ const New: React.FC = () => {
   const [errors, setErrors] = useState("")  
   const id = useParams<ParamTypes>()
   const [user, setUser] = useContext(Context)
+  const [answers, setAnswers] = useState([])
+  const [load, setLoad] = useState(true)  
+  const [confirm, setConfirm] = useState("")
 
   const [options, setOptions] = useState<any>({
     title: "",
@@ -71,14 +85,31 @@ const New: React.FC = () => {
           idForm: id.id
         }
       }).then((res) => {
-        console.log(res.data.result.cards)
         setOptions(res.data.result)
+        setLoad(false)
       }).catch((err) => {
         console.log(err)
       })
     }
 
     getForm()
+  }, [])
+
+  useEffect(() => {
+    const getAnswers = () => {
+      api.get('/answer/getAnswer', {
+        params: {
+          idForm: id.id
+        }
+      }).then((res: any) => {
+        console.log(res.data.result)
+        setAnswers(res.data.result)
+      }).catch((err: any) => {
+        console.log(err)
+      })
+    }
+
+    getAnswers()
   }, [])
 
   const updateForm = async () => {
@@ -102,9 +133,13 @@ const New: React.FC = () => {
       return "the title must be at least 3 characters"
     }
 
+    if ( options.description.length < 3) {
+      return "the description must be at least 3 characters"
+    }
+
     for( var c = 0 ; c < options.cards.length ; c++) {
       if (options.cards[c].question.length < 3) {
-        return "all cards must have a question of at least 3 characters"
+        return `all cards must have a question of at least 3 characters ${c}`
       } 
 
       if (options.cards[c].type == "choice") {
@@ -126,46 +161,57 @@ const New: React.FC = () => {
   };
 
   return (
-    <Container>
-      {
-        options.user_id == user.id ? (
-          <>
-            <TopbarCreateForm 
-              errors={errors} 
-              setErrors={setErrors}
-              titleForm={options.title} 
-              updateForm={updateForm}
-              verifyErrors={verifyErrors}
-            />
-            
-            <div className="top">
-              <Tabs
-                value={value} 
-                onChange={handleChange}
-                indicatorColor="primary"
-                textColor="primary"
-                centered
-              >
-                <Tab label="questions" />
-                <Tab label="answers" />
-              </Tabs>
-            </div>
-            {
-              value == 0 ? (
-                <FormCreate
-                  options={options} 
-                  setOptions={setOptions}
-                />
-              ) : (
-                <FormAnswers/>
-              )
-            }
-          </>
-        ) : (
-          <Answer options={options} setOptions={setOptions}/>
-        )
-      }
-    </Container>
+    load ? (
+      <LoadContainer>
+        <CircularProgress/>
+      </LoadContainer>
+    ) : (
+      <Container>
+        {
+          options.user_id == user.id ? (
+            <>
+                  <TopbarCreateForm 
+                    errors={errors} 
+                    setErrors={setErrors}
+                    titleForm={options.title} 
+                    updateForm={updateForm}
+                    verifyErrors={verifyErrors}
+                    confirm={confirm}
+                    setConfirm={setConfirm}
+                  />
+                  
+                  <div className="top">
+                    <Tabs
+                      value={value} 
+                      onChange={handleChange}
+                      indicatorColor="primary"
+                      textColor="primary"
+                      centered
+                    >
+                      <Tab label="questions" />
+                      <Tab label="answers" />
+                    </Tabs>
+                  </div>
+                  {
+                    value == 0 ? (
+                      <FormCreate
+                        options={options} 
+                        setOptions={setOptions}
+                      />
+                    ) : (
+                      <FormAnswers
+                        answers={answers}
+                        setAnswers={setAnswers}
+                      />
+                    )
+                  }
+                </>
+          ) : (
+            <Answer options={options} setOptions={setOptions}/>
+          )
+        }  
+      </Container>
+    )
   );
 }
 

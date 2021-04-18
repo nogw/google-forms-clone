@@ -36,6 +36,10 @@ export const Docs = styled.div`
 export const Doc = styled.div`
   .image {
     border: 1px solid #dadce0;
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     border-radius: 4px;
     height: 114px;
     width: 152px;

@@ -44,7 +44,10 @@ function App() {
         </Route>
 
         <PrivateRoute path="/" exact component={() => <Root/>}/>
-        <PrivateRoute path="/f/:id" exact component={() => <New/>}/>
+        
+        <Route path="/f/:id" exact>
+          <New/>
+        </Route>
       </Switch>
       <GlobalStyle/>
     </Router>

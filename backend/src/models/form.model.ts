@@ -4,7 +4,8 @@ const Schema = mongoose.Schema
 const questionsSchema = new Schema(
   {
     option: {
-      type: String
+      type: String,
+      default: ""
     }
   }
 )
@@ -13,13 +14,13 @@ const cardsSchema = new Schema(
   {
     question: {
       type: String,
-      required: true
+      default: ""
     },
     type: {
       type: String,
-      required: false
+      default: "choice"
     },
-    questions: [questionsSchema]
+    questions: [questionsSchema],
   }
 )
 
@@ -31,11 +32,11 @@ const formSchema = new Schema(
     },
     title: {
       type: String,
-      required: true
+      default: ""
     },
     description: {
       type: String,
-      required: true
+      default: ""
     },
     data: {
       type: String,

@@ -85,8 +85,12 @@ const CardForm: React.FC<any> = ({
   }
 
   const deleteQuestion = ( j: number ) => {
-    card[index].questions.splice(j, 1)
-    setOptions((prev: any) => ({...prev, cards: card}))
+    if (card[index].questions.length > 1) {
+      card[index].questions.splice(j, 1)
+      setOptions((prev: any) => ({...prev, cards: card}))
+    } else {
+      console.log('no')
+    }
   }
 
   const addNewCard = () => {
@@ -104,8 +108,12 @@ const CardForm: React.FC<any> = ({
   }
 
   const deleteCard = () => {
-    card.splice(index, 1)
-    setOptions((prev: any) => ({...prev, cards: card}))
+    if (card.length > 1) {
+      card.splice(index, 1)
+      setOptions((prev: any) => ({...prev, cards: card}))
+    } else {
+      console.log('no')
+    }
   }
 
   let method

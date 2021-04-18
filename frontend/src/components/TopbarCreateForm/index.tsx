@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
 import Logo from '../logo.svg'
 
 import FolderOpenIcon from '@material-ui/icons/FolderOpen';
@@ -9,18 +9,46 @@ import SettingsOutlinedIcon from '@material-ui/icons/SettingsOutlined';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import ErrorIcon from '@material-ui/icons/Error';
 import IconButton from '@material-ui/core/IconButton'
-import Avatar from '@material-ui/core/Avatar'
+import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
 
-import { Container, ButtonSubmit } from './styles';
+import { Container, ButtonSubmit, Avatar } from './styles';
+import { Context } from '../../UserProvider';
 
-const TopbarCreateForm: React.FC<any> = ({ titleForm, setTitleForm, setErrors, verifyErrors, errors, updateForm }: any) => {
+const TopbarCreateForm: React.FC<any> = ({ confirm, setConfirm, titleForm, setTitleForm, setErrors, verifyErrors, errors, updateForm }: any) => {
+  const [user, setUser] = useContext(Context)
+  
+  const colors = [
+    "#FF7262",
+    "#0ACF83",
+    "#A259FF",
+    "#ED5B61",
+    "#4EA9F6",
+    "#767F8C",
+    "#ebc83d",
+    "#badf55",
+    "#badf55",
+    "#2082AA",
+    "#A259FF",
+    "#FF8C00",
+    "#ED5B61",
+    "#4EA9F6",
+    "#767F8C",
+    "#ebc83d",
+    "#badf55",
+    "#2082AA",
+    "#FF8C00"
+  ]
+  
   const handleUpdateForm = () => {    
     var getErrors: any = verifyErrors()
 
     if (getErrors < 1) {
       updateForm()
+      setErrors("")
+      setConfirm("updated form")
     } else {
       setErrors(getErrors)
+      setConfirm("")
     }
   }
 
@@ -51,7 +79,7 @@ const TopbarCreateForm: React.FC<any> = ({ titleForm, setTitleForm, setErrors, v
       {
         errors && (
           <div className="error">
-            <IconButton>
+            <IconButton size="small">
               <ErrorIcon/>
               <div className="errorMessage">
                 <p>{errors}</p>
@@ -60,10 +88,25 @@ const TopbarCreateForm: React.FC<any> = ({ titleForm, setTitleForm, setErrors, v
           </div>
         )
       }
+      {
+        confirm && (
+          <div className="success">
+            <IconButton size="small">
+              <CheckCircleOutlineIcon/>
+              <div className="successMessage">
+                <p>{confirm}</p>
+              </div>
+            </IconButton>
+          </div>
+        )
+      }
       <IconButton>
         <MoreVertIcon style={{ color: "#5f6368" }}/>
       </IconButton>
-      <Avatar/>
+      
+      <Avatar bgcColor={colors[user.avatarColor]}>
+          <h1>{user ? user.name.substring(0, 2) : ""}</h1>
+        </Avatar>
     </Container>
   );
 }

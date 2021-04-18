@@ -15,7 +15,7 @@ const create = async ( req: Request, res: Response ) => {
     .then((form: any) => {
       return res.status(200).json({
         message: "created form",
-        link: `http://localhost:3000/f/${form._id}`
+        link: `${form._id}`
       })
     })
     .catch((error: any) => {
@@ -53,7 +53,7 @@ const updateForm = async (req: Request, res: Response) => {
 
 const getMyForms = async ( req: Request, res: Response ) => {
   try {
-    const forms = await Form.find({ user_id: req.query.id }, {'id':1, 'user_id':1, 'title':1}).exec()
+    const forms = await Form.find({ user_id: req.query.id }, {'id':1, 'user_id':1, 'title':1, 'data':1}).exec()
 
     return res.status(200).json({
       results: forms

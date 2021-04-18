@@ -14,6 +14,7 @@ export const Container = styled.div`
   
   .error {
     position: relative;
+    margin-left: 10px;
     z-index: 999;
 
     &:hover {
@@ -22,15 +23,6 @@ export const Container = styled.div`
         display: flex;
       }
     }
-
-    /* .MuiButtonBase-root {
-      &:focus {
-        .errorMessage {
-          opacity: 1;
-          display: flex;
-        }
-      }
-    } */
 
     .MuiSvgIcon-root {
       color: #e63946;
@@ -48,6 +40,40 @@ export const Container = styled.div`
         color: #f1f1f1;
         font-size: 1rem;
         padding: 12px;
+      }
+    }
+  }
+
+  .success {
+    position: relative;
+    margin-left: 10px;
+    z-index: 999;
+
+    &:hover {
+      .successMessage {
+        opacity: 1;
+        display: flex;
+      }
+    }
+
+    .MuiSvgIcon-root {
+      color: #64f683;
+    }
+
+    .successMessage {
+      display: none;
+      opacity: 0;
+      background-color: #212121;
+      min-width: 170px;
+      align-items: center;
+      justify-content: center;
+      position: absolute;
+      top: 46px;
+
+      p {
+        color: #f1f1f1;
+        font-size: 0.9rem;
+        padding: 10px;
       }
     }
   }
@@ -89,6 +115,31 @@ export const Container = styled.div`
     width: 32px;
   }
 `;
+
+interface Props {
+  bgcColor: string;
+}
+
+export const Avatar = styled.div<Props>`
+  margin: 8px;
+  min-height: 32px;
+  min-width: 32px;
+  height: 32px;
+  width: 32px;
+  border-radius: 50%;
+  background-color: ${props => props.bgcColor || '#767F8C'};
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  h1 {
+    color: #fff;
+    font-size: 1rem;
+    position: relative;
+    bottom: 1.51px;
+  }
+`;
+
 
 export const ButtonSubmit = styled.button`
   background-color: #673ab7;

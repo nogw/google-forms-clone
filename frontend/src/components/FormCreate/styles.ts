@@ -502,7 +502,7 @@ export const Container = styled.div`
   height: 100vh;
 
   ${Card}:last-child {
-    padding-bottom: 85px;
+    padding-bottom: 130px;
 
     .delete {
       .buttons {

@@ -12,7 +12,7 @@ import { Link } from 'react-router-dom'
 
 import dayjs from 'dayjs'
 
-const Form: React.FC<any> = ({ title, id }) => {
+const Form: React.FC<any> = ({ title, id, data }) => {
   return (
     <Link to={`/f/${id}`}>
       <FormContainer>
@@ -23,7 +23,7 @@ const Form: React.FC<any> = ({ title, id }) => {
           <h1 className="title">{title}</h1>
           <div className="infos">
             <ListAltRoundedIcon className="list"/>
-            <p>Open {dayjs().format(`MMMM D, YYYY`)}</p>
+            <p>Open {data}</p>
             <MoreVertOutlinedIcon className="dots"/>
           </div>
         </div>
@@ -40,7 +40,7 @@ const Recents: React.FC = () => {
     const getForms = () => {
       api.get('/form/getMyForms', {
         params: {
-          id: '6074613c97c77f1247b85ff8'
+          id: user.id
         }
       }).then((res) => {
         setRecents(res.data.results)
@@ -73,12 +73,12 @@ const Recents: React.FC = () => {
         </div>
       </Header>
       {
-        recents ? (
+        recents.length > 0 ? (
           <div className="recentForms">
             {
               recents.map((recent: any) => {
                 return (
-                  <Form key={recent._id} id={recent._id} title={recent.title} />
+                  <Form key={recent._id} id={recent._id} data={recent.data} title={recent.title} />
                 )
               })
             }
