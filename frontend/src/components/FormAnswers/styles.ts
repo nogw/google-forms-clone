@@ -4,7 +4,7 @@ export const Container = styled.div`
   display: flex;
   align-items: center;
   flex-direction: column;
-  overflow: auto;
+  overflow-y: auto;
   height: 100vh;
 
   .noResponses {
@@ -41,7 +41,7 @@ export const Container = styled.div`
       box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.1);
 
       /* border: 1px solid #dadce0; */
-      
+
       margin-top: 20px;
       width: 60%;
       position: relative;
@@ -68,6 +68,10 @@ export const Container = styled.div`
         font-size: 14px;
         border-radius: 6px;
       }
+    }
+
+    .answer:last-child {
+      margin-bottom: 130px;
     }
   }
 `;

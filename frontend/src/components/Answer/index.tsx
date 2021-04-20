@@ -35,7 +35,7 @@ const TitleCard: React.FC<any> = ({ title, description }) => {
 
 const CardItem: React.FC<any> = ({ setAnswerObj, question, questions, type, index }) => {  
   const handleChangeAnswer = (value: any) => {
-    setAnswerObj((prev: any) => ({...prev, [index]: { question: question, answer: value }}))
+    setAnswerObj((prev: any) => ({...prev, [index]: { question: question, answer: value, typeForm: type }}))
   } 
 
   let method

@@ -11,6 +11,10 @@ const answerIndSchema = new Schema(
       type: String,
       required: true
     },
+    typeForm: {
+      type: String,
+      default: "choice"
+    }
   }
 )
 

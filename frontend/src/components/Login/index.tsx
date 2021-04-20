@@ -40,6 +40,7 @@ const Login: React.FC = () => {
   const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   
   const handleCreateAccount = () => {
+    setIsLoading(true)
     inputs.username.length <= 2 && console.log('name is lower')
     !re.test(String(inputs.emailRegister).toLowerCase()) && console.log('email is not valid')
     inputs.passwordRegister.length <= 7 && console.log('password is lower')
@@ -54,10 +55,16 @@ const Login: React.FC = () => {
           passwordConfirm: inputs.passwordRegisterConfirm,
         })
         .then((user) => {
-          console.log(user.data)
+          const decoded: any = jwtDecode(user.data.token)
+
+          localStorage.setItem('jwt', JSON.stringify(user.data.token));
+          
+          setUser(decoded)
+
+          history.push("/")
         })
         .catch((err) => {
-          console.log(err.response.data)
+          console.log(err.response)
         })
       }
 

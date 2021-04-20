@@ -97,7 +97,7 @@ export const Container = styled.div`
       width: 40px;
       margin-right: 10px;
       object-fit: cover;
-      /* animation: spin infinite 20s linear; */
+      animation: spin infinite 20s linear;
     }
 
     h1 {

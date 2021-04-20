@@ -43,8 +43,18 @@ const register = async (req: Request, res: Response) => {
       user
         .save()
         .then((user: any) => {
+          let token: any = jwt.sign(
+            { 
+              id: user._id,
+              name: user.name,
+              avatarColor: user.avatarColor
+            }, 
+            process.env.JWT_SECRET
+          )
+  
           return res.status(200).json({
-            message: "user added"
+            message: 'Login successful',
+            token,
           })
         })
         .catch((error: any) => {

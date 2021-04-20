@@ -12,7 +12,7 @@ const GlobalStyle = createGlobalStyle`
     font-family: 'Open Sans', 'Roboto';
     background-color: #fff;
     min-height: 100vh;
-    overflow-y: hidden;
+    overflow: hidden;
   }
 `
 

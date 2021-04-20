@@ -69,7 +69,7 @@ export const FormContainer = styled.div`
   }
 
   .gray {
-    width: 198px;
+    width: 197px;
     background-color: #e2e2e2;
     display: flex;
     align-items: center;
